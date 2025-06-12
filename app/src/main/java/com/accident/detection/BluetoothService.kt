@@ -38,7 +38,8 @@ class BluetoothService : Service() {
             val reader = BufferedReader(InputStreamReader(socket!!.inputStream))
             var line: String?
 
-            while (isActive && socket!!.isConnected) {
+            // use scope.isActive to check cancellation
+            while (scope.isActive && socket!!.isConnected) {
                 line = reader.readLine()
                 if (line != null) {
                     NotificationHelper.pushMessage(this@BluetoothService, line)
